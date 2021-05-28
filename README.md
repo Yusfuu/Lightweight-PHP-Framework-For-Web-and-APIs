@@ -10,7 +10,7 @@ composer install
 ```
 1. Clone/download this folder to your computer.
 2. create .env file
-3. copy content in enf-exampl in .env file
+3. copy content from env-example to .env file
 4. config .env file
 5. Voila! Enjoy development.
 
