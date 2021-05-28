@@ -2,7 +2,7 @@
 
 use App\Application;
 use App\Routing\Route;
-use App\Controllers\EmojiController;
+use App\Controllers\UserController;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -11,10 +11,10 @@ $dotenv->load();
 
 $app = new Application();
 
-Route::get('/users', [EmojiController::class, 'index']);
-Route::get('/users/{id}', [EmojiController::class, 'show']);
-Route::post('/users', [EmojiController::class, 'store']);
-Route::put('/users/{id}', [EmojiController::class, 'update']);
-Route::delete('/users/{id}', [EmojiController::class, 'destroy']);
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::post('/users', [UserController::class, 'store']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 $app->run();
