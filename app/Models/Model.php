@@ -29,8 +29,6 @@ class Model
       return is_string($val) ? "'$val'" : $val;
     }, array_values((array)$qq)));
     $query = "INSERT INTO $table ($columns) VALUES ($values);";
-    print_r($query);
-    exit;
     $sth = $dbh->prepare($query);
     $sth->execute();
   }
