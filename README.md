@@ -12,8 +12,7 @@ composer install
 2. create .env file
 3. copy content in enf-exampl in .env file
 4. config .env file
-5. 
-6. Voila! Enjoy development.
+5. Voila! Enjoy development.
 
 ## Usage
 
