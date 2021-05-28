@@ -1,0 +1,3 @@
+DSN=mysql:host=localhost;dbname=exmaple
+USERNAME=root
+PASSWORD=password
