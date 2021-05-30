@@ -14,14 +14,10 @@ class Request
   {
     $this->params = $args->params;
     $this->query = $args->query;
-    $this->contentType = $_SERVER["CONTENT_TYPE"] ?? '';
-    $this->method = $_SERVER["REQUEST_METHOD"];
-    $this->path = $_SERVER["REQUEST_URI"];
-  }
-
-  public static function url()
-  {
-    return (object)["method" => $_SERVER["REQUEST_METHOD"], "path" => $_SERVER["REQUEST_URI"]];
+    $this->contentType = $_SERVER["CONTENT_TYPE"] ?? null;
+    $this->method = $_SERVER["REQUEST_METHOD"] ?? null;
+    $this->path = $_SERVER["REQUEST_URI"] ?? null;
+    $this->authorization = $_SERVER["HTTP_AUTHORIZATION"] ?? null;
   }
 
   public function json()
@@ -29,7 +25,9 @@ class Request
     if ($this->method !== "POST" || $this->contentType !== "application/json") {
       return [];
     }
-    return json_decode(trim(file_get_contents("php://input")));
+    $json = json_decode(trim(file_get_contents("php://input")));
+
+    return json_last_error() === JSON_ERROR_NONE ? $json : [];
   }
 
   public function input()

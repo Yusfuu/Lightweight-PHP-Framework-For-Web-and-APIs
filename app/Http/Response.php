@@ -18,16 +18,4 @@ class Response
       "message" => $message
     ];
   }
-
-
-  public static function _404()
-  {
-    http_response_code(404);
-    $resposne = [
-      "code" => 404,
-      "type" => "404 Not Found",
-      "message" => "The requested resource could not be found but may be available again in the future."
-    ];
-    return self::json($resposne);
-  }
 }

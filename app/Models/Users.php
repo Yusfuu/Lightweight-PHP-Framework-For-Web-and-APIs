@@ -4,8 +4,10 @@ namespace App\Models;
 
 class Users extends Model
 {
-  public function __construct()
-  {
-    //
-  }
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [];
 }

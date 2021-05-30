@@ -9,8 +9,7 @@ class Application
 {
   public function __construct()
   {
-    $this->request = Request::url();
-    $this->route = new Route($this->request->method, $this->request->path);
+    $this->route = new Route($_SERVER["REQUEST_METHOD"],  $_SERVER["REQUEST_URI"]);
   }
 
   public function run()

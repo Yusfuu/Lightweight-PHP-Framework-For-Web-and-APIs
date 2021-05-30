@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\config\Database;
+
 class Model
 {
 
