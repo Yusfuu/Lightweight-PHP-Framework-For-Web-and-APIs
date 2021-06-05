@@ -12,33 +12,30 @@ class Request
 
   public function __construct($args)
   {
+    $this->method = $args->method;
     $this->params = $args->params;
     $this->query = $args->query;
+    $this->url = $args->url;
+    $this->path = $args->path;
     $this->contentType = $_SERVER["CONTENT_TYPE"] ?? null;
-    $this->method = $_SERVER["REQUEST_METHOD"] ?? null;
-    $this->path = $_SERVER["REQUEST_URI"] ?? null;
     $this->authorization = $_SERVER["HTTP_AUTHORIZATION"] ?? null;
   }
 
   public function json()
   {
     if ($this->method !== "POST" || $this->contentType !== "application/json") {
-      return [];
+      return null;
     }
-    $json = json_decode(trim(file_get_contents("php://input")));
 
-    return json_last_error() === JSON_ERROR_NONE ? $json : [];
+    $value = json_decode(file_get_contents("php://input"));
+
+    return json_last_error() === JSON_ERROR_NONE ? $value : null;
   }
 
-  public function input()
+  public function form()
   {
-    if ($this->method === "PUT") {
-      parse_str(file_get_contents("php://input"), $body);
-      return (object)$body;
-    }
-
     if ($this->method !== "POST") {
-      return [];
+      return null;
     }
 
     $body = [];

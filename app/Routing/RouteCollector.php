@@ -2,7 +2,6 @@
 
 namespace App\Routing;
 
-
 class RouteCollector
 {
 

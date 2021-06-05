@@ -24,11 +24,11 @@ class Route extends RouteCollector
   protected $currentRoute = null;
 
   /**
-   * The query names for the route.
-   *
-   * @var string[]
+   * The args names for the route.
+   * 
+   * @var object
    */
-  private  $query = [];
+  protected $args;
 
   /**
    * All of the verbs supported by the router.
@@ -39,18 +39,15 @@ class Route extends RouteCollector
 
   public function __construct()
   {
-    $this->req = $this->request();
-    $this->method = $this->req->method;
-    $this->path = $this->req->path;
-    $this->query = $this->req->query;
+    $this->args = $this->request_url();
   }
 
   public function call()
   {
-    $routes = $this->filter_routes_by_method(self::$routes, $this->method);
+    $routes = $this->filter_routes_by_method(self::$routes, $this->args->method);
 
     foreach ($routes as $value) {
-      if ($this->matches($value["uri"], $this->path)) {
+      if ($this->matches($value["uri"], $this->args->path)) {
         $this->currentRoute = (object) $value;
         break 1;
       }
@@ -59,13 +56,8 @@ class Route extends RouteCollector
     if (!$this->currentRoute) {
       return Response::json(HttpException::HttpNotFoundException());
     }
-
-    $args = (object)[
-      "params" => $this->params,
-      "query" => (object) $this->query
-    ];
-
-    return call_user_func($this->currentRoute->callback, (new Request($args)));
+    $this->args->params = $this->params;
+    return call_user_func($this->currentRoute->callback, (new Request($this->args)));
   }
 
   /**
@@ -106,7 +98,7 @@ class Route extends RouteCollector
     return false;
   }
 
-  private function request()
+  private function request_url()
   {
     $httpMethod = $_SERVER["REQUEST_METHOD"] ?? null;
 
@@ -120,12 +112,12 @@ class Route extends RouteCollector
       return Response::json(HttpException::HttpBadRequestException());
     }
 
-    parse_str($_SERVER["QUERY_STRING"], $qs);
+    parse_str($_SERVER["QUERY_STRING"] ?? "", $qs);
 
-    return ((object) array_merge(parse_url($URL), [
+    return (object) array_merge(parse_url($URL), [
+      "url" => $URL,
       "method" => $httpMethod,
       "query" => (object)$qs,
-      "contentType" => ($_SERVER["CONTENT_TYPE"]) ?? null
-    ]));
+    ]);
   }
 }

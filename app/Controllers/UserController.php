@@ -4,10 +4,10 @@ namespace App\Controllers;
 
 use App\Http\Request;
 use App\Http\Response;
-use App\Models\Users;
 
 class UserController extends Controller
 {
+
   /**
    * Display a listing of the resource.
    *
@@ -15,8 +15,7 @@ class UserController extends Controller
    */
   public function index(Request $request)
   {
-    $users = Users::all();
-    Response::json($users);
+    //
   }
 
   /**
@@ -26,7 +25,7 @@ class UserController extends Controller
    */
   public function store(Request $request)
   {
-    Users::create($request->json());
+    //
   }
 
   /**
@@ -36,8 +35,7 @@ class UserController extends Controller
    */
   public function show(Request $request)
   {
-    $user = Users::find($request->params->id);
-    Response::json($user);
+    //
   }
 
   /**
@@ -47,7 +45,7 @@ class UserController extends Controller
    */
   public function update(Request $request)
   {
-    Users::update($request->input(), $request->params->id);
+    //
   }
 
   /**
@@ -57,6 +55,6 @@ class UserController extends Controller
    */
   public function destroy(Request $request)
   {
-    Users::delete($request->params->id);
+    //
   }
 }

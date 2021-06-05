@@ -1,6 +1,6 @@
 <?php
 
-namespace App\config;
+namespace App\Config;
 
 use PDO;
 
@@ -13,6 +13,7 @@ class Database
    *
    * @return \PDO
    */
+
   public static function connect()
   {
     if (is_null(self::$dbh)) {
