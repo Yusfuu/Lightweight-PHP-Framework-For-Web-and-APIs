@@ -48,4 +48,15 @@ class HttpException
       "description" => "You are not permitted to perform the requested operation."
     ];
   }
+
+  public static function HttpBadRequestException()
+  {
+    http_response_code(400);
+
+    return [
+      "code" => 400,
+      "message" => "Bad request.",
+      "description" => "The server cannot or will not process the request due to an apparent client error."
+    ];
+  }
 }

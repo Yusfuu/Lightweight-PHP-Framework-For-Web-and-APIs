@@ -5,16 +5,9 @@ namespace App\Routing;
 use App\Http\HttpException;
 use App\Http\Request;
 use App\Http\Response;
-use Exception;
 
-class Route
+class Route extends RouteCollector
 {
-  /**
-   * An array of the routes.
-   *
-   * @var array
-   */
-  protected static $routes = [];
 
   /**
    * The parameter names for the route.
@@ -42,78 +35,18 @@ class Route
    *
    * @var string[]
    */
-  protected $verbs = ['GET', 'POST', 'PUT', 'DELETE'];
+  protected $verbs = ["GET", "POST", "PUT", "DELETE"];
 
-  public function __construct($method, $path)
+  public function __construct()
   {
-    $this->method = $method;
-    $this->path = $path;
-  }
-
-  /**
-   * Adds a route to the collection.
-   *
-   * @param string $method
-   * @param string $uri
-   * @param mixed  $callback
-   */
-  private static function addRoute(string $method, string $uri, $callback)
-  {
-    $group = ["method" => $method, "uri" => $uri, "callback" => $callback];
-    array_push(self::$routes, $group);
-  }
-
-  /**
-   * Adds a GET route to the collection
-   *
-   * @param string $uri
-   * @param mixed  $callable
-   */
-  public static function get(string $uri, $callable)
-  {
-    self::addRoute("GET", $uri, $callable);
-  }
-
-  /**
-   * Adds a POST route to the collection
-   *
-   * @param string $uri
-   * @param mixed  $callable
-   */
-  public static function post(string $uri, $callable)
-  {
-    self::addRoute("POST", $uri, $callable);
-  }
-
-  /**
-   * Adds a PUT route to the collection
-   *
-   * @param string $uri
-   * @param mixed  $callable
-   */
-  public static function put(string $uri, $callable)
-  {
-    self::addRoute("PUT", $uri, $callable);
-  }
-
-  /**
-   * Adds a DELETE route to the collection
-   *
-   * @param string $uri
-   * @param mixed  $callable
-   */
-  public static function delete(string $uri, $callable)
-  {
-    self::addRoute("DELETE", $uri, $callable);
+    $this->req = $this->request();
+    $this->method = $this->req->method;
+    $this->path = $this->req->path;
+    $this->query = $this->req->query;
   }
 
   public function call()
   {
-
-    if (!in_array(strtoupper($this->method), $this->verbs)) {
-      return Response::json(HttpException::HttpMethodNotAllowedException());
-    }
-
     $routes = $this->filter_routes_by_method(self::$routes, $this->method);
 
     foreach ($routes as $value) {
@@ -127,7 +60,10 @@ class Route
       return Response::json(HttpException::HttpNotFoundException());
     }
 
-    $args = (object)["params" => $this->params, "query" => (object) $this->query];
+    $args = (object)[
+      "params" => $this->params,
+      "query" => (object) $this->query
+    ];
 
     return call_user_func($this->currentRoute->callback, (new Request($args)));
   }
@@ -157,14 +93,10 @@ class Route
    */
   private function matches(string $uri, string $path)
   {
-    $url = parse_url($path);
-    $path = $url["path"];
-
-    $regex = '~^' . preg_replace('/\{(.*?)\}/', '(?<$1>[a-zA-Z0-9_\-\@\.]+)', $uri) . '$~';
+    $regex = "~^" . preg_replace("/\{(.*?)\}/", "(?<$1>[a-zA-Z0-9_\-\@\.]+)", $uri) . "$~";
 
     if (preg_match($regex, $path, $parameter)) {
 
-      parse_str($url["query"] ?? '',   $this->query);
       $this->params = (object) array_filter($parameter, function ($k) {
         return is_string($k);
       }, ARRAY_FILTER_USE_KEY);
@@ -172,5 +104,28 @@ class Route
       return true;
     }
     return false;
+  }
+
+  private function request()
+  {
+    $httpMethod = $_SERVER["REQUEST_METHOD"] ?? null;
+
+    if (!in_array(strtoupper($httpMethod), $this->verbs)) {
+      return Response::json(HttpException::HttpMethodNotAllowedException());
+    }
+
+    $URL = (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $URL = filter_var($URL, FILTER_SANITIZE_URL);
+    if (!filter_var($URL, FILTER_VALIDATE_URL)) {
+      return Response::json(HttpException::HttpBadRequestException());
+    }
+
+    parse_str($_SERVER["QUERY_STRING"], $qs);
+
+    return ((object) array_merge(parse_url($URL), [
+      "method" => $httpMethod,
+      "query" => (object)$qs,
+      "contentType" => ($_SERVER["CONTENT_TYPE"]) ?? null
+    ]));
   }
 }

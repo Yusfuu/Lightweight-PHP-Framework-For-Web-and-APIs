@@ -1,11 +1,19 @@
 {
-    "name": "admin/api",
+    "name": "lightweight/framework",
     "authors": [
         {
             "name": "Yusfuu",
             "email": "youssefhajjari01@gmail.com"
         }
     ],
+    "scripts": {
+        "env": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "serve": [
+            "@php -S localhost:8080"
+        ]
+    },
     "autoload": {
         "psr-4": {
             "App\\": "app/"
