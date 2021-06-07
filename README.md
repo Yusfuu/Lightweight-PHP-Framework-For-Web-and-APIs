@@ -5,22 +5,28 @@ Simple PHP framework that helps you quickly understand and write simple APIs.
 
 Use the package manager [composer](https://getcomposer.org/) to install required files
 
+Install dependencies
 ```bash
 composer install
 ```
-1. Clone/download this folder to your computer.
-2. create .env file
-3. copy content from env-example to .env file
-4. config .env file
-5. Voila! Enjoy development.
 
-## Usage
+## Run Your Application With PHP’s Webserver
+Environment Variables
+```bash
+  composer run env
+```
 
-> `cd public/`  
->  `php -S localhost:8080`
+Go to the public directory
+```bash
+  cd public
+```
 
-## Model
-create name of model as same as name of table in database
+Start the server
+
+```bash
+  php -S localhost:8080
+```
+Voila! Enjoy development.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
