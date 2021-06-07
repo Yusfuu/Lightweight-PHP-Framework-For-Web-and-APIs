@@ -3,6 +3,9 @@
 use App\Application;
 use App\Routing\Route;
 use App\Controllers\UserController;
+use App\Http\Middleware\Auth;
+use App\Http\Response;
+use App\Http\Request;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -25,5 +28,12 @@ Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);
 Route::put('/users/{id}', [UserController::class, 'update']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
+
+
+Route::get('/hello/{name}', function (Request $request) {
+  $name = $request->params->name;
+  echo ("Hello, $name");
+});
+
 
 $app->run();
