@@ -16,16 +16,12 @@ Environment Variables
   composer run env
 ```
 
-Go to the public directory
-```bash
-  cd public
-```
-
 Start the server
 
 ```bash
   composer run serve
 ```
+
 Voila! Enjoy development.
 
 ## Contributing
