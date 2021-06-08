@@ -11,7 +11,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "serve": [
-            "@php -S localhost:8080"
+            "@php -S localhost:8080 -t public public/index.php"
         ]
     },
     "autoload": {

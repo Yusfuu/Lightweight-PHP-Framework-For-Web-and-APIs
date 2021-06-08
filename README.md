@@ -24,7 +24,7 @@ Go to the public directory
 Start the server
 
 ```bash
-  php -S localhost:8080
+  composer run serve
 ```
 Voila! Enjoy development.
 
