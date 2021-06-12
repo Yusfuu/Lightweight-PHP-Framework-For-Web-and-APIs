@@ -23,17 +23,9 @@ $app = new Application();
 |
 */
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::post('/users', [UserController::class, 'store']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
-
-
 Route::get('/hello/{name}', function (Request $request) {
   $name = $request->params->name;
   echo ("Hello, $name");
 });
-
 
 $app->run();
