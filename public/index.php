@@ -2,8 +2,6 @@
 
 use App\Application;
 use App\Routing\Route;
-use App\Controllers\UserController;
-use App\Http\Middleware\Auth;
 use App\Http\Response;
 use App\Http\Request;
 
