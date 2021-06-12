@@ -10,18 +10,53 @@ Install dependencies
 composer install
 ```
 
-## Run Your Application With PHP’s Webserver
-Environment Variables
+## Environment Variables
 ```bash
   composer run env
 ```
 
-Start the server
+
+## Hello World
+File: `public/index.php`
+
+```php
+<?php
+
+use App\Application;
+use App\Routing\Route;
+use App\Http\Response;
+use App\Http\Request;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
+$dotenv->load();
+
+// Instantiate App
+$app = new Application();
+
+// Add routes
+Route::get('/hello/{name}', function (Request $request) {
+  $name = $request->params->name;
+  echo ("Hello, $name");
+});
+
+$app->run();
+
+```
+
+## PHP built-in server
+Run the following command in terminal to start localhost web server, assuming `./public/` is public-accessible directory with `index.php` file:
 
 ```bash
-  composer run serve
+cd public/
+php -S localhost:8080
 ```
-Voila! Enjoy development.
+Or you may quickly test this using :
+```bash
+php -S localhost:8000 -t public
+```
+##### Going to http://localhost:8080/hello/world will now display "Hello, world".
 
 Example Controller
 -------
