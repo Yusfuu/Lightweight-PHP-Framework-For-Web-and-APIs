@@ -106,7 +106,8 @@ class Route extends RouteCollector
       return Response::json(HttpException::HttpMethodNotAllowedException());
     }
 
-    $URL = (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $URL = preg_replace('/%20/', '', (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+
     $URL = filter_var($URL, FILTER_SANITIZE_URL);
     if (!filter_var($URL, FILTER_VALIDATE_URL)) {
       return Response::json(HttpException::HttpBadRequestException());

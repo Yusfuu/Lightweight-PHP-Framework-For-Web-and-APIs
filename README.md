@@ -75,7 +75,7 @@ class ExampleController extends Controller
    *
    * @return \Http\Request
    */
-  public function index(Request $request)
+  public static function index(Request $request)
   {
     //
   }
@@ -85,7 +85,7 @@ class ExampleController extends Controller
    *
    * @param  \Http\Request  $request
    */
-  public function store(Request $request)
+  public static function store(Request $request)
   {
     //
   }
@@ -95,7 +95,7 @@ class ExampleController extends Controller
    *
    * @param  \Http\Request  $request
    */
-  public function show(Request $request)
+  public static function show(Request $request)
   {
     //
   }
@@ -105,7 +105,7 @@ class ExampleController extends Controller
    *
    * @param  \Http\Request  $request
    */
-  public function update(Request $request)
+  public static function update(Request $request)
   {
     //
   }
@@ -115,11 +115,29 @@ class ExampleController extends Controller
    *
    * @param  \Http\Request  $request
    */
-  public function destroy(Request $request)
+  public static function destroy(Request $request)
   {
     //
   }
 }
+
+```
+Example Model
+-------
+```php
+
+<?php
+
+namespace App\Models;
+
+class ExampleModel extends Model
+{
+  /**
+   * @var array
+   */
+  protected $fillable = [];
+}
+
 ```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
