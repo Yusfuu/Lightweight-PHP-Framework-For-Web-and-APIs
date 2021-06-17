@@ -139,6 +139,9 @@ class ExampleModel extends Model
 }
 
 ```
+## Documentation
+[Documentation](https://yusfuu.github.io/Lightweight-PHP-Framework-For-APIs/)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
