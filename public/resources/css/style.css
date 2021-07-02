@@ -1,0 +1,19 @@
+#scream {
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+#scream:hover {
+  transform: translateY(-18px);
+}
+
+.iconx {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.iconx > svg {
+  width: 22px;
+  height: 22px;
+}
