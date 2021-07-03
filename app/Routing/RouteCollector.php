@@ -21,8 +21,15 @@ class RouteCollector
    */
   private static function addRoute(string $method, string $uri, $callback)
   {
-    $group = ["method" => $method, "uri" => $uri, "callback" => $callback];
+    $group = ["method" => $method, "uri" => self::prefix() . $uri, "callback" => $callback];
     array_push(self::$routes, $group);
+  }
+
+
+  private static function prefix()
+  {
+    $requireds = get_required_files();
+    return basename(end($requireds), ".php") == "api" ? "/api" : "";
   }
 
   /**

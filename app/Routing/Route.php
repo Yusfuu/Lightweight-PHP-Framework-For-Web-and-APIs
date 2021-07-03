@@ -47,7 +47,7 @@ class Route extends RouteCollector
     $routes = $this->filter_routes_by_method(self::$routes, $this->args->method);
 
     foreach ($routes as $value) {
-      if ($this->matches($value["uri"], $this->args->path)) {
+      if ($this->matches($value["uri"], $this->args->path ?? "/")) {
         $this->currentRoute = (object) $value;
         break 1;
       }
@@ -95,6 +95,7 @@ class Route extends RouteCollector
 
       return true;
     }
+
     return false;
   }
 
@@ -107,8 +108,9 @@ class Route extends RouteCollector
     }
 
     $URL = preg_replace('/%20/', '', (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
-
+    $URL = rtrim($URL, '/\\');
     $URL = filter_var($URL, FILTER_SANITIZE_URL);
+
     if (!filter_var($URL, FILTER_VALIDATE_URL)) {
       return Response::json(HttpException::HttpBadRequestException());
     }

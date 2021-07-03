@@ -1,5 +1,5 @@
 {
-    "name": "lightweight/framework-api",
+    "name": "lightweight/framework-web-api",
     "authors": [
         {
             "name": "Yusfuu",
@@ -11,16 +11,24 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "serve": [
-            "@php -S localhost:8080 -t public public/index.php"
+            "@php -S localhost:8000 -t public public/index.php"
         ]
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/lib/helpers.php"
+        ]
     },
     "require": {
         "vlucas/phpdotenv": "^5.3",
         "firebase/php-jwt": "^5.2"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }

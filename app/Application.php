@@ -14,6 +14,15 @@ class Application
 
   public function run()
   {
+    $this->boot();
     $this->route->call();
+  }
+
+  public function boot()
+  {
+    $uri = ltrim($_SERVER['REQUEST_URI'], "/");
+    [$uri] = explode("/", $uri);
+    $dir = dirname(__DIR__);
+    $uri === "api" ? require_once "$dir/routes/api.php" : require_once "$dir/routes/web.php";
   }
 }

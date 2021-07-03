@@ -16,7 +16,7 @@ class Request
     $this->params = $args->params;
     $this->query = $args->query;
     $this->url = $args->url;
-    $this->path = $args->path;
+    $this->path = $args->path ?? "/";
     $this->contentType = $_SERVER["CONTENT_TYPE"] ?? null;
     $this->authorization = $_SERVER["HTTP_AUTHORIZATION"] ?? null;
   }
