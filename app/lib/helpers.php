@@ -2,13 +2,14 @@
 
 namespace App\lib;
 
-
 // Forms csrf and methods
 
 if (!function_exists('csrf_field')) {
   function csrf_field()
   {
-    session_start();
+    if (!isset($_SESSION)) {
+      session_start();
+    }
     if (empty($_SESSION['_token'])) {
       $_SESSION['_token'] = bin2hex(random_bytes(16));
     }
@@ -42,6 +43,12 @@ if (!function_exists('view')) {
    * @return void
    */
 
+
+  function replacer($x, $y, $z)
+  {
+    return str_replace($x, sprintf('%s', $y), $z);
+  }
+
   function view($view = null, $data = [])
   {
     if (func_num_args() === 0) {
@@ -61,14 +68,31 @@ if (!function_exists('view')) {
     if (preg_match_all("/{{(.*?)}}/", $layout, $m)) {
       foreach ($m[1] as $key => $value) {
         if (str_starts_with($value, '@')) {
-          if ($value == "@csrf") {
-            $layout = str_replace($m[0][$key], sprintf('%s', csrf_field()), $layout);
-          } else {
-            preg_match('/\'(.*)\'/', $value, $output_array);
-            $layout = str_replace($m[0][$key], sprintf('%s', method_field(strtoupper($output_array[1]))), $layout);
+          if (preg_match('/@([a-z]+)/', $value, $output_matches)) {
+            $naming = $output_matches[1];
+
+            if ($naming === "csrf") {
+              $layout = replacer($m[0][$key], csrf_field(), $layout);
+            }
+
+            if ($naming === "method") {
+              if (preg_match("!\(([^\)]+)\)!", $value, $match)) {
+                $action = strtoupper(substr($match[1], 1, -1));
+                $layout = replacer($m[0][$key], method_field($action), $layout);
+              }
+            }
+
+            if ($naming === "asset") {
+              if (preg_match("!\(([^\)]+)\)!", $value, $match)) {
+                $file = substr($match[1], 1, -1);
+                $folder = explode('.', $file)[1];
+                $ddir = "resources/$folder/$file";
+                $layout = replacer($m[0][$key], $ddir, $layout);
+              }
+            }
           }
         } else {
-          $layout = str_replace($m[0][$key], sprintf('%s', $data[$value]), $layout);
+          $layout = replacer($m[0][$key], $data[$value], $layout);
         }
       }
     }

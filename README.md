@@ -50,13 +50,9 @@ Run the following command in terminal to start localhost web server, assuming `.
 
 ```bash
 cd public/
-php -S localhost:8080
+php -S localhost:8000
 ```
-Or you may quickly test this using :
-```bash
-php -S localhost:8000 -t public
-```
-##### Going to http://localhost:8080/hello/world will now display "Hello, world".
+##### Going to http://localhost:8000/hello/world will now display "Hello, world".
 
 Example Controller
 -------

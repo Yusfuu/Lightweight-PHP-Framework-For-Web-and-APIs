@@ -3,15 +3,12 @@
     "authors": [
         {
             "name": "Yusfuu",
-            "email": "youssefhajjari01@gmail.com"
+            "email": "holasamilol@gmail.com"
         }
     ],
     "scripts": {
         "env": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "serve": [
-            "@php -S localhost:8000 -t public public/index.php"
         ]
     },
     "autoload": {
