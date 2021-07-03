@@ -5,7 +5,6 @@ namespace App\Routing;
 use App\Http\HttpException;
 use App\Http\Request;
 use App\Http\Response;
-use App\lib\CSRF;
 
 class Route extends RouteCollector
 {
@@ -96,6 +95,7 @@ class Route extends RouteCollector
 
       return true;
     }
+
     return false;
   }
 
@@ -110,9 +110,11 @@ class Route extends RouteCollector
     $URL = preg_replace('/%20/', '', (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
     $URL = rtrim($URL, '/\\');
     $URL = filter_var($URL, FILTER_SANITIZE_URL);
+
     if (!filter_var($URL, FILTER_VALIDATE_URL)) {
       return Response::json(HttpException::HttpBadRequestException());
     }
+
     parse_str($_SERVER["QUERY_STRING"] ?? "", $qs);
 
     return (object) array_merge(parse_url($URL), [
@@ -120,28 +122,5 @@ class Route extends RouteCollector
       "method" => $httpMethod,
       "query" => (object)$qs,
     ]);
-  }
-
-  public static function render($view)
-  {
-    return include_once dirname(__DIR__, 2) . "/public/resources/views/$view.php";
-  }
-
-  public static function view($view = null, $params = [])
-  {
-    ob_start();
-    self::render($view);
-    $layout = ob_get_clean();
-
-    if (preg_match_all("/{{(.*?)}}/", $layout, $m)) {
-      foreach ($m[1] as $key => $value) {
-        if ($value == "@csrf") {
-          $layout = str_replace($m[0][$key], sprintf('%s', CSRF::generateCsrfToken()), $layout);
-        } else {
-          $layout = str_replace($m[0][$key], sprintf('%s', $params[$value]), $layout);
-        }
-      }
-    }
-    exit($layout);
   }
 }

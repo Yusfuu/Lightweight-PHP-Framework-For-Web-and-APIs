@@ -2,6 +2,7 @@
 
 use App\Http\Request;
 use App\Routing\Route;
+use function App\lib\view;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,5 +14,5 @@ use App\Routing\Route;
 */
 
 Route::get('/', function (Request $request) {
-  Route::view('welcome', ['lang' => "PHP"]);
+  return view('welcome', ['lang' => 'PHP']);
 });
