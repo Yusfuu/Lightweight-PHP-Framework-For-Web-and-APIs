@@ -3,6 +3,9 @@
   cursor: pointer;
 }
 
+.bg-dark {
+  height: 100vh;
+}
 #scream:hover {
   transform: translateY(-18px);
 }

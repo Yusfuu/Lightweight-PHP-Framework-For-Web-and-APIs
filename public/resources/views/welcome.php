@@ -12,13 +12,14 @@
 </head>
 
 <body>
-  <div class="px-4 py-5 my-5 text-center">
+  <div class="py-5 bg-dark text-secondary text-center">
     <img id="scream" src="https://img.icons8.com/fluent/144/000000/edvard-munch.png" />
-    <h1 class="display-5 fw-bold mt-3">Lightweight {{lang}} Framework</h1>
+    <h1 class="display-5 fw-bold mt-3 text-white">Lightweight {{lang}} Framework</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Simple PHP framework that helps you quickly understand and write simple APIs.</p>
+      <p class="lead mb-4">Simple PHP framework that helps you quickly understand and write web application and APIs.</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <a href="https://yusfuu.github.io/Lightweight-PHP-Framework-For-APIs/" target="_blank" class="btn btn-primary btn-lg px-4 gap-3 iconx">
+
+        <a href="https://yusfuu.github.io/Lightweight-PHP-Framework-For-Web-and-APIs/" target="_blank" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold gap-3 iconx">
           <span>Documentation</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-code" viewBox="0 0 16 16">
             <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"></path>
@@ -33,7 +34,6 @@
       </div>
     </div>
   </div>
-
 </body>
 
 <script src="{{@asset('app.js')}}"></script>
