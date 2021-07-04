@@ -6,6 +6,7 @@ use PDO;
 
 class Database
 {
+
   private static $dbh = null;
 
   /**
