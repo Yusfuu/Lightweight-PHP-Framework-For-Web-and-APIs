@@ -7,11 +7,11 @@ namespace App\lib;
 if (!function_exists('csrf_field')) {
   function csrf_field()
   {
-    if (!isset($_SESSION)) {
+    if (session_status() === PHP_SESSION_NONE) {
       session_start();
     }
     if (empty($_SESSION['_token'])) {
-      $_SESSION['_token'] = bin2hex(random_bytes(16));
+      $_SESSION['_token'] = base64_encode(random_bytes(16));
     }
     return ('<input type="hidden" name="_token" value="' . $_SESSION['_token'] . '">');
   }
@@ -26,11 +26,15 @@ if (!function_exists('method_field')) {
 
 function verifyCsrfToken($token)
 {
-  if ($token === $_SESSION['_token']) {
-    # code...
-  }
+  return hash_equals($token, $_SESSION['_token'] ?? null);
 }
 
+function unsetCsrfToken()
+{
+  if (isset($_SESSION['_token'])) {
+    unset($_SESSION['_token']);
+  }
+}
 
 if (!function_exists('view')) {
 
@@ -60,10 +64,6 @@ if (!function_exists('view')) {
     ob_start();
     include_once $path;
     $layout = ob_get_clean();
-
-    if (empty($data)) {
-      return exit($layout);
-    }
 
     if (preg_match_all("/{{(.*?)}}/", $layout, $m)) {
       foreach ($m[1] as $key => $value) {
