@@ -75,8 +75,8 @@ Run the following command in terminal to start localhost web server, assuming `.
 cd public/
 php -S localhost:8000
 ```
-> Going to [http://localhost:8080/api/hello/world](http://localhost:8080/api/hello/world) will now display "Hello, world".  
-> Going to [http://localhost:8080/](http://localhost:8080/) will render the welcome page.
+> Going to [http://localhost:8000/api/hello/world](http://localhost:8000/api/hello/world) will now display "Hello, world".  
+> Going to [http://localhost:8000/](http://localhost:8000/) will render the welcome page.
 
 
 Example Controller
