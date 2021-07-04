@@ -1,7 +1,3 @@
-# Lightweight PHP Framework For Web and APIs
-PHP framework that helps you write quickly
-simple but powerful web apps and APIs
-
 ## Installation
 
 Use the package manager [composer](https://getcomposer.org/) to install required files
