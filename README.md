@@ -1,5 +1,6 @@
-# Lightweight-PHP-Framework-For-APIs.
-Simple PHP framework that helps you quickly understand and write simple APIs.
+# Lightweight PHP Framework For Web and APIs
+PHP framework that helps you write quickly
+simple but powerful web apps and APIs
 
 ## Installation
 
@@ -17,34 +18,60 @@ composer install
 
 
 ## Hello World
-File: `public/index.php`
 
+file `routes/api.php`
 ```php
 <?php
 
-use App\Application;
-use App\Routing\Route;
-use App\Http\Response;
 use App\Http\Request;
+use App\Routing\Route;
 
-require __DIR__ . '/../vendor/autoload.php';
+/*
+|------------------------------------------------------------------
+| API Routes
+|------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. 
+|
+*/
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
-$dotenv->load();
-
-// Instantiate App
-$app = new Application();
-
-// Add routes
 Route::get('/hello/{name}', function (Request $request) {
   $name = $request->params->name;
   echo ("Hello, $name");
 });
 
-$app->run();
+```
+file `routes/web.php`
+```php
+<?php
+
+use App\Http\Request;
+use App\Routing\Route;
+use function App\lib\view;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application.
+|
+*/
+
+Route::get('/', function (Request $request) {
+  return view('welcome', ['lang' => 'PHP']);
+});
 
 ```
+## Available Router Methods
 
+The router allows you to register routes that respond to any HTTP verb:
+```php
+Route::get($uri, $callback);
+Route::post($uri, $callback);
+Route::put($uri, $callback);
+Route::delete($uri, $callback);
+```
 ## PHP built-in server
 Run the following command in terminal to start localhost web server, assuming `./public/` is public-accessible directory with `index.php` file:
 
