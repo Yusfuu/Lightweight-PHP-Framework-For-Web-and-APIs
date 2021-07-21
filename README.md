@@ -11,12 +11,6 @@ Install dependencies
 composer install
 ```
 
-## Environment Variables
-```bash
-  composer run env
-```
-
-
 ## Hello World
 
 file `routes/api.php`
