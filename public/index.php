@@ -9,4 +9,6 @@ $dotenv->load();
 
 $app = new Application();
 
+$app->cors(true);
+
 $app->run();
