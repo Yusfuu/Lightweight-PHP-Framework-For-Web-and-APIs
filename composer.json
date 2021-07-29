@@ -1,5 +1,7 @@
 {
     "name": "lightweight/framework-web-api",
+    "license": "MIT",
+    "description": "PHP framework that helps you write quickly simple but powerful web apps and APIs",
     "authors": [
         {
             "name": "Yusfuu",
