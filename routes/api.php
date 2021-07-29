@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Request;
+use App\Http\Response;
 use App\Routing\Route;
 
 /*
@@ -12,7 +13,7 @@ use App\Routing\Route;
 |
 */
 
-Route::get('/hello/{name}', function (Request $request) {
+Route::get('/hello/{name}', function (Request $request, Response $response) {
   $name = $request->params->name;
-  echo ("Hello, $name");
+  $response->write("Hello, $name");
 });

@@ -57,7 +57,7 @@ class Route extends RouteCollector
       return Response::json(HttpException::HttpNotFoundException());
     }
     $this->args->params = $this->params;
-    return call_user_func($this->currentRoute->callback, (new Request($this->args)));
+    return call_user_func($this->currentRoute->callback, (new Request($this->args)), (new Response()));
   }
 
   /**

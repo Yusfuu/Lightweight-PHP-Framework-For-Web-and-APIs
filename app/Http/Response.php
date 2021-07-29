@@ -7,7 +7,7 @@ class Response
   public static function json($body)
   {
     header('Content-Type: application/json');
-    exit(json_encode($body));
+    return exit(json_encode($body));
   }
 
   public static function make($code, $type, $message)
@@ -17,5 +17,10 @@ class Response
       "type" => $type,
       "message" => $message
     ];
+  }
+
+  public static function write($body)
+  {
+    return exit($body);
   }
 }
